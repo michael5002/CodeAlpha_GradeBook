@@ -2,6 +2,8 @@ package alpha.code;
 
 import java.util.ArrayList;
 
+import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class GradeBook {
@@ -58,8 +60,20 @@ public class GradeBook {
     public void init(){
         Scanner sc = new Scanner(System.in); //instantiates Scanner
 
-        System.out.println("Enter total number of students");
-        int studentTotal = sc.nextInt();//prompts user for total number of students
+
+        int studentTotal=0;
+        while(true){
+            try {
+                System.out.println("Enter total number of students");
+                studentTotal = sc.nextInt();//prompts user for total number of students
+                break;
+            }catch (InputMismatchException e){
+                System.out.println("INPUT DIGITS!!");
+                sc.nextLine();
+            }
+        }
+
+
 
         if(studentTotal == 0){//validates the value of studentTotal
             System.out.println("Zero number of students entered.");
@@ -67,23 +81,41 @@ public class GradeBook {
             return;
         }else
             for(int i=0; i<studentTotal;i++){
-                System.out.println("Student " + (i+1));
+                System.out.println("Student " + (i+1) + " details");
 
-                System.out.print("Enter student name:");
-                String name = sc.next();
+                System.out.print("Enter Student Full Name:");//prompts user for other name.
 
-                System.out.println("Enter "+ name.toUpperCase() + "'s score");
-                double score = sc.nextDouble();
+                sc.nextLine();
+                String fullName = sc.nextLine();
 
+                while (true){
+                    try {
+                        System.out.println("Enter "+ fullName.toUpperCase() + "'s score");
+                        System.out.println("Score must be >= 0 and <= 100 ");
+                        double score = sc.nextDouble();
+                        if(score<0 || score>100){
+                            System.out.println("Invalid Input");
+                            sc.nextLine();
+                        }else{
+                            studentScore.add(score);
+                            break;
+                        }
 
-                studentName.add(name.toUpperCase());
-                studentScore.add(score);
+                    }catch (InputMismatchException e){
+                        System.out.println("INPUT DIGITS!!");
+                        sc.nextLine();
+                    }
+                }
+
+                studentName.add(fullName.toUpperCase());
+
             }
 
         System.out.println("===== STUDENT GRADE BOOK =====");
-        System.out.printf("%10s %9s%n","NAME","SCORE" );
+        System.out.printf("%10s %15s%n","NAME","SCORE" );
         for (int i=0; i<studentName.size(); i++){
-            System.out.printf("%d%9s:    %.2f%n", i+1, studentName.get(i), studentScore.get(i));
+            System.out.printf("%d %9s:    %10.2f%n", i+1, studentName.get(i), studentScore.get(i));
+            System.out.println();
         }
 
         sc.close();
