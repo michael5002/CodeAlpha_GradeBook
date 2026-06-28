@@ -18,12 +18,6 @@ A simple Java program that helps manage student grades and provides basic statis
 - User Input
 - Basic Calculations
 
-# How to Run
-
-bash
-javac StudentGradeTracker.java
-java StudentGradeTracker
-
 
 Author
 
